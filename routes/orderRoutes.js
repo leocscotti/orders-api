@@ -1,75 +1,16 @@
-const service = require("../services/orderService");
+const express = require("express");
+const router = express.Router();
 
-/**
- * Criar pedido
- */
-exports.createOrder = async (req, res) => {
-  try {
-    const order = await service.createOrder(req.body);
+const controller = require("../controllers/orderController");
 
-    res.status(201).json(order);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+router.post("/", controller.createOrder);
 
-/**
- * Buscar pedido por ID
- */
-exports.getOrder = async (req, res) => {
-  try {
-    const order = await service.getOrder(req.params.id);
+router.get("/", controller.listOrders);
 
-    if (!order)
-      return res.status(404).json({ message: "Pedido não encontrado" });
+router.get("/:id", controller.getOrder);
 
-    res.json(order);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+router.put("/:id", controller.updateOrder);
 
-/**
- * Listar pedidos
- */
-exports.listOrders = async (req, res) => {
-  try {
-    const orders = await service.listOrders();
+router.delete("/:id", controller.deleteOrder);
 
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-/**
- * Atualizar pedido
- */
-exports.updateOrder = async (req, res) => {
-  try {
-    const order = await service.updateOrder(
-      req.params.id,
-      req.body
-    );
-
-    if (!order)
-      return res.status(404).json({ message: "Pedido não encontrado" });
-
-    res.json(order);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-/**
- * Deletar pedido
- */
-exports.deleteOrder = async (req, res) => {
-  try {
-    await service.deleteOrder(req.params.id);
-
-    res.json({ message: "Pedido removido" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+module.exports = router;

@@ -20,9 +20,21 @@ function mapOrder(data) {
  * Criar pedido
  */
 exports.createOrder = async (data) => {
-  const mapped = mapOrder(data);
 
-  const order = new Order(mapped);
+  // transformação do JSON recebido
+  const mappedOrder = {
+    orderId: data.numeroPedido.split("-")[0], // remove o -01
+    value: data.valorTotal,
+    creationDate: new Date(data.dataCriacao),
+
+    items: data.items.map(item => ({
+      productId: Number(item.idItem),
+      quantity: item.quantidadeItem,
+      price: item.valorItem
+    }))
+  };
+
+  const order = new Order(mappedOrder);
 
   return await order.save();
 };
