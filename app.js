@@ -1,17 +1,16 @@
 require("dotenv").config();
-
 const express = require("express");
-
-const orderRoutes = require("./routes/orderRoutes");
 
 const app = express();
 
-const {swaggerUI, swaggerSpec}= require("./docs/swagger");
-
 app.use(express.json());
 
+// rotas
+const orderRoutes = require("./routes/orderRoutes");
 app.use("/order", orderRoutes);
 
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+// swagger
+const { swaggerUi, swaggerSpec } = require("./docs/swagger");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 module.exports = app;

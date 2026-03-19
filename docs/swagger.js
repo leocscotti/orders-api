@@ -7,15 +7,14 @@ const options = {
     info: {
       title: "Orders API",
       version: "1.0.0",
-      description: "API para gerenciamento de pedidos"
     },
     servers: [
       {
-        url: "http://localhost:3000"
-      }
-    ]
+        url: "http://localhost:3000",
+      },
+    ],
   },
-  apis: ["./routes/*.js"]
+  apis: ["./routes/*.js"],
 };
 
 const swaggerSpec = swaggerJsdoc(options);

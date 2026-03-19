@@ -43,7 +43,7 @@ exports.listOrders = async (req, res) => {
 };
 
 /**
- * Atualizar pedido
+ * Editar pedido
  */
 exports.updateOrder = async (req, res) => {
   try {
